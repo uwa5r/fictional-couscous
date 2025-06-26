@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informacje - Darmowa Telewizja Online</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base styles for light mode */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Jasnoszary tło */
+            color: #333; /* Ciemniejszy tekst */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+        }
+        .dark body {
+            background-color: #1a202c; /* Ciemne tło */
+            color: #e2e8f0; /* Jasny tekst */
+        }
+        /* Header styles for light mode */
+        header {
+            background-image: linear-gradient(to right, #2563eb, #4f46e5); /* Niebiesko-indygo gradient */
+            color: white;
+            transition: background-image 0.3s ease, background-color 0.3s ease;
+        }
+        .dark header {
+            background-image: linear-gradient(to right, #1e3a8a, #3730a3); /* Ciemniejszy niebiesko-indygo gradient */
+        }
+        /* Section background for light mode */
+        section {
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+        .dark section {
+            background-color: #2d3748; /* Ciemne tło sekcji */
+        }
+        /* Text color in dark mode for specific elements */
+        .dark h1, .dark h2, .dark h3 {
+            color: #90cdf4; /* Jaśniejszy niebieski dla nagłówków w ciemnym motywie */
+        }
+        .dark p, .dark li {
+            color: #cbd5e0; /* Jaśniejszy szary dla akapitów i list w ciemnym motywie */
+        }
+        /* Button styles for light mode */
+        a.bg-blue-600 {
+            background-color: #2563eb; /* Niebieski */
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .dark a.bg-blue-600 {
+            background-color: #1e40af; /* Ciemniejszy niebieski */
+        }
+        /* Footer styles for light mode */
+        footer {
+            background-color: #2d3748; /* Ciemnoszary */
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark footer {
+            background-color: #1a202c; /* Jeszcze ciemniejszy szary */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Nagłówek -->
+    <header class="p-4 shadow-lg rounded-b-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold mb-2 md:mb-0">📺 zapstrim.site</h1>
+            <!-- Nawigacja i przełącznik motywu -->
+            <div class="flex items-center space-x-4">
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="index.html" class="text-white hover:text-blue-200 transition duration-300 px-3 py-2 rounded-md hover:bg-blue-500 dark:hover:bg-blue-800">Strona Główna</a></li>
+                        <li><a href="channels.html" class="text-white hover:text-blue-200 transition duration-300 px-3 py-2 rounded-md hover:bg-blue-500 dark:hover:bg-blue-800">Kanały</a></li>
+                        <li><a href="info.html" class="text-white hover:text-blue-200 transition duration-300 px-3 py-2 rounded-md hover:bg-blue-500 dark:hover:bg-blue-800">Informacje</a></li>
+                    </ul>
+                </nav>
+                <!-- Przycisk przełączania motywu -->
+                <button id="themeToggle" class="p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white text-xl transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                    ☀️
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Główna treść -->
+    <main class="flex-grow container mx-auto p-6 flex flex-col items-center justify-center">
+        <section class="p-8 rounded-lg shadow-xl max-w-4xl w-full text-center mb-8">
+            <h2 class="text-4xl font-extrabold text-blue-700 mb-6">Informacje o Darmowej Telewizji Online</h2>
+            <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                Nasza platforma powstała z myślą o dostarczeniu łatwego i bezpłatnego dostępu do szerokiej gamy kanałów telewizyjnych online. 
+                Wierzymy, że rozrywka i informacja powinny być dostępne dla każdego, bez konieczności ponoszenia kosztów subskrypcji czy rejestracji.
+            </p>
+            <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                Stale pracujemy nad rozbudową naszej biblioteki kanałów oraz ulepszaniem funkcjonalności serwisu, 
+                aby zapewnić jak najlepsze wrażenia z oglądania. Twoja satysfakcja jest dla nas priorytetem!
+            </p>
+        </section>
+
+        <section class="p-8 rounded-lg shadow-xl max-w-4xl w-full text-left mb-8">
+            <h3 class="text-3xl font-bold text-blue-700 mb-4">Jak to działa?</h3>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                <li>Korzystamy z publicznie dostępnych strumieni telewizyjnych.</li>
+                <li>Kanały są embedowane za pomocą iframe, co pozwala na ich odtwarzanie bezpośrednio na naszej stronie.</li>
+                <li>Nie przechowujemy żadnych treści wideo na naszych serwerach.</li>
+                <li>Zapewniamy prosty interfejs użytkownika do łatwego przeglądania i wyboru kanałów.</li>
+            </ul>
+        </section>
+
+        <!-- Nowa sekcja z zastrzeżeniem prawnym -->
+        <section class="p-8 rounded-lg shadow-xl max-w-4xl w-full text-left mb-8 bg-yellow-50 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700">
+            <h3 class="text-3xl font-bold text-yellow-800 dark:text-yellow-300 mb-4">Ważna Informacja Prawna</h3>
+            <p class="text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
+                Serwis opiera się głównie na publicznych źródłach dostępnych w internecie, prezentując jedynie linki (embed) znalezione w sieci. 
+                Strony te potwierdziły legalność swoich transmisji na swoich stronach internetowych lub stronach dostawców streamingu, 
+                zapewniając, że ich treści nie naruszają obowiązujących przepisów prawa, w tym praw autorskich.
+            </p>
+            <p class="text-lg text-gray-800 dark:text-gray-200 mt-4 leading-relaxed">
+                Administratorzy serwisu nie mają uprawnień ani możliwości weryfikacji legalności emitowanych materiałów. 
+                Wszelkie zgłoszenia dotyczące naruszeń praw autorskich należy kierować bezpośrednio do właściciela 
+                konkretnej strony transmitującej, która jest źródłem danego materiału.
+            </p>
+        </section>
+
+        <section class="p-8 rounded-lg shadow-xl max-w-4xl w-full text-center">
+            <h3 class="text-3xl font-bold text-blue-700 mb-4">...</h3>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                ... 
+                <a href="mailto:kontakt@twojatelewizja.pl" class="text-blue-600 hover:underline">...</a>
+            </p>
+            <p class="text-lg text-gray-700 mt-4 leading-relaxed">
+                Dziękujemy za korzystanie z naszego serwisu!
+            </p>
+        </section>
+    </main>
+
+    <!-- Stopka -->
+    <footer class="bg-gray-800 text-white p-4 mt-6 rounded-t-lg">
+        <div class="container mx-auto text-center text-sm">
+            &copy; 2025 Darmowa Telewizja Online. Wszelkie prawa zastrzeżone.
+        </div>
+    </footer>
+
+    <script>
+        // Funkcja do ustawiania motywu
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('themeToggle').innerHTML = '🌙'; // Ikona księżyca
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('themeToggle').innerHTML = '☀️'; // Ikona słońca
+            }
+        }
+
+        // Sprawdź preferencje motywu z localStorage przy ładowaniu strony
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light'; // Domyślnie jasny motyw
+            setTheme(savedTheme);
+
+            // Dodaj listener do przycisku przełączania motywu
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const currentTheme = localStorage.getItem('theme');
+                if (currentTheme === 'dark') {
+                    setTheme('light');
+                } else {
+                    setTheme('dark');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
