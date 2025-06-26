@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanały - Darmowa Telewizja Online</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Podstawowe style dla jasnego motywu */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Jasnoszary tło */
+            color: #333; /* Ciemniejszy tekst */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Płynne przejście */
+        }
+        .dark body {
+            background-color: #1a202c; /* Ciemne tło */
+            color: #e2e8f0; /* Jasny tekst */
+        }
+        /* Style nagłówka dla jasnego motywu */
+        header {
+            background-image: linear-gradient(to right, #2563eb, #4f46e5); /* Niebiesko-indygo gradient */
+            color: white;
+            transition: background-image 0.3s ease, background-color 0.3s ease;
+        }
+        .dark header {
+            background-image: linear-gradient(to right, #1e3a8a, #3730a3); /* Ciemniejszy niebiesko-indygo gradient */
+        }
+        /* Tło sekcji dla jasnego motywu */
+        section {
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+        .dark section {
+            background-color: #2d3748; /* Ciemne tło sekcji */
+        }
+        /* Kolor tekstu w ciemnym motywie dla konkretnych elementów */
+        .dark h1, .dark h2, .dark h3 {
+            color: #90cdf4; /* Jaśniejszy niebieski dla nagłówków w ciemnym motywie */
+        }
+        .dark p, .dark li {
+            color: #cbd5e0; /* Jaśniejszy szary dla akapitów i list w ciemnym motywie */
+        }
+        /* Style przycisków dla jasnego motywu */
+        a.bg-blue-600, .channel-button {
+            background-color: #2563eb; /* Niebieski */
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .dark a.bg-blue-600, .dark .channel-button {
+            background-color: #1e40af; /* Ciemniejszy niebieski */
+        }
+        /* Style stopki dla jasnego motywu */
+        footer {
+            background-color: #2d3748; /* Ciemnoszary */
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark footer {
+            background-color: #1a202c; /* Jeszcze ciemniejszy szary */
+        }
+
+        /* Ustawienie iframe na zajmowanie całej dostępnej przestrzeni */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 960px; /* Maksymalna szerokość dla wideo w normalnym trybie */
+            margin: 0 auto; /* Wyśrodkowanie */
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000; /* Czarne tło dla odtwarzacza */
+            border-radius: 0.5rem; /* Zaokrąglone rogi */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Delikatny cień */
+            transition: all 0.3s ease; /* Płynne przejście dla trybu kinowego */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* Dodatkowe style dla przycisków kanałów */
+        .channel-button {
+            @apply flex flex-col items-center justify-center p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105 cursor-pointer text-center;
+            min-width: 120px; /* Minimalna szerokość przycisku */
+        }
+        .channel-button:hover {
+            background-color: #1d4ed8; /* Ciemniejszy niebieski na hover */
+        }
+        .dark .channel-button:hover {
+            background-color: #172b8d; /* Jeszcze ciemniejszy niebieski na hover w ciemnym motywie */
+        }
+
+        /* Tryb kinowy - dynamiczne style */
+        .cinema-mode-active .main-content-section {
+            max-width: none; /* Usuń ograniczenie szerokości z sekcji */
+            padding-left: 0; /* Usuń padding z sekcji */
+            padding-right: 0; /* Usuń padding z sekcji */
+        }
+        .cinema-mode-active .video-container {
+            max-width: 100%; /* Rozszerzenie do pełnej szerokości rodzica (sekcji) */
+            padding-bottom: 65%; /* Trochę szerszy aspekt dla trybu kinowego */
+            border-radius: 0; /* Usuń zaokrąglone rogi w trybie kinowym */
+        }
+        /* Dodatkowe przyciski */
+        .control-button {
+            @apply p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white text-xl transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+        }
+
+        /* Styl dla miejsc na reklamy */
+        .ad-placeholder {
+            @apply bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center rounded-lg shadow-md text-sm italic;
+            min-height: 90px; /* Standardowa wysokość reklamy */
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Nagłówek -->
+    <header class="p-4 shadow-lg rounded-b-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold mb-2 md:mb-0">📺 zapstrim.site</h1>
+            <!-- Nawigacja i przełącznik motywu -->
+            <div class="flex items-center space-x-4">
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="index.html" class="text-white hover:text-blue-200 transition duration-300 px-3 py-2 rounded-md hover:bg-blue-500 dark:hover:bg-blue-800">Strona Główna</a></li>
+                        <li><a href="channels.html" class="text-white hover:text-blue-200 transition duration-300 px-3 py-2 rounded-md hover:bg-blue-500 dark:hover:bg-blue-800">Kanały</a></li>
+                        <li><a href="info.html" class="text-white hover:text-blue-200 transition duration-300 px-3 py-2 rounded-md hover:bg-blue-500 dark:hover:bg-blue-800">Informacje</a></li>
+                    </ul>
+                </nav>
+                <!-- Przycisk udostępniania -->
+                <button id="shareButton" class="control-button">
+                    🔗
+                </button>
+                <!-- Przycisk przełączania motywu -->
+                <button id="themeToggle" class="control-button">
+                    ☀️
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Główna treść -->
+    <main class="flex-grow container mx-auto p-6">
+        <section id="main-content-section" class="p-8 rounded-lg shadow-xl mb-8">
+            <h2 class="text-4xl font-extrabold text-blue-700 dark:text-blue-300 mb-6 text-center">Dostępne Kanały</h2>
+
+            <!-- Miejsca na reklamy - Górny placeholder -->
+            <div class="ad-placeholder w-full h-24 mb-8">
+                Reklama
+            </div>
+
+            <!-- Lista kanałów (przeniesiona na górę) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mb-8">
+                <!-- Przykładowe kanały - w prawdziwej aplikacji tutaj będą rzeczywiste linki do strumieni -->
+                <button class="channel-button" data-src="https://popcdn.day/go.php?stream=PolsatSportPremium1">
+                    <span>PSP1</span>
+                </button>
+                <button class="channel-button" data-src="https://popcdn.day/go.php?stream=PolsatSportPremium2">
+                    <span>PSP2</span>
+                </button>
+                <button class="channel-button" data-src="https://freetvspor.shop/live/stream-560.php">
+                    <span>TVP1</span>
+                </button>
+                <button class="channel-button" data-src="https://freetvspor.shop/live/stream-562.php">
+                    <span>POL</span>
+                </button>
+                <button class="channel-button" data-src="https://freetvspor.shop/live/stream-564.php">
+                    <span>POLFILM</span>
+                </button>
+               <button class="channel-button" data-src="https://freetvspor.shop/live/stream-565.php">
+                    <span>TVN</span>
+                </button>
+               <button class="channel-button" data-src="https://freetvspor.shop/live/stream-567.php">
+                    <span>C+360</span>
+                </button>
+               <button class="channel-button" data-src="https://freetvspor.shop/live/stream-568.php">
+                    <span>FilmBoxPrem</span>
+                </button>
+               <button class="channel-button" data-src="https://freetvspor.shop/live/stream-569.php">
+                    <span>HBO</span>
+                </button>
+               <button class="channel-button" data-src="https://freetvspor.shop/live/stream-71.php">
+                    <span>ELEVEN 1</span>
+                </button>
+               <button class="channel-button" data-src="https://freetvspor.shop/live/stream-72.php">
+                    <span>ELEVEN 2</span>
+                </button>
+               <button class="channel-button" data-src="https://popcdn.day/go.php?stream=ElevenSports1PL">
+                    <span>ELEVEN 1 (2)</span>
+                </button>
+               <button class="channel-button" data-src="https://popcdn.day/go.php?stream=ElevenSports2PL">
+                    <span>ELEVEN 2 (2)</span>
+                </button>
+
+
+
+
+                    <!-- <span class="text-3xl mb-2">💡</span> --> 
+                </button>
+            </div>
+
+            <!-- Obszar odtwarzacza wideo i kontrolki -->
+            <div class="relative mb-8">
+                <div class="video-container">
+                    <iframe id="channelPlayer" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+                        Twoja przeglądarka nie obsługuje ramek iframe.
+                    </iframe>
+                    <div id="playerPlaceholder" class="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xl font-semibold rounded-lg">
+                        Wybierz kanał z listy powyżej, aby rozpocząć oglądanie.
+                    </div>
+                </div>
+                <!-- Przyciski kontrolne dla odtwarzacza -->
+                <div class="flex justify-center mt-4 space-x-4">
+                    <button id="cinemaModeToggle" class="control-button">
+                        🎬 Tryb Kinowy
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-8 text-center">
+            </p>
+        </section>
+
+        <!-- Miejsca na reklamy - Dolny placeholder -->
+        <div class="ad-placeholder w-full h-32 mt-8">
+            Reklama
+        </div>
+    </main>
+
+    <!-- Stopka -->
+    <footer class="bg-gray-800 text-white p-4 mt-6 rounded-t-lg">
+        <div class="container mx-auto text-center text-sm">
+            &copy; 2025 Darmowa Telewizja Online. Wszelkie prawa zastrzeżone.
+        </div>
+    </footer>
+
+    <script>
+        // Funkcja do ustawiania motywu
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('themeToggle').innerHTML = '🌙'; // Ikona księżyca
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('themeToggle').innerHTML = '☀️'; // Ikona słońca
+            }
+        }
+
+        // Sprawdź preferencje motywu z localStorage przy ładowaniu strony
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light'; // Domyślnie jasny motyw
+            setTheme(savedTheme);
+
+            // Dodaj listener do przycisku przełączania motywu
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const currentTheme = localStorage.getItem('theme');
+                if (currentTheme === 'dark') {
+                    setTheme('light');
+                } else {
+                    setTheme('dark');
+                }
+            });
+
+            // Logika ładowania kanałów do iframe
+            const channelButtons = document.querySelectorAll('.channel-button');
+            const channelPlayer = document.getElementById('channelPlayer');
+            const playerPlaceholder = document.getElementById('playerPlaceholder');
+            const mainContentSection = document.getElementById('main-content-section'); // Główna sekcja treści
+
+            channelButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const videoSrc = button.dataset.src;
+                    if (videoSrc) {
+                        channelPlayer.src = videoSrc;
+                        playerPlaceholder.classList.add('hidden'); // Ukryj placeholder
+                    } else {
+                        alert('Brak źródła wideo dla tego kanału.');
+                    }
+                });
+            });
+
+            // Ukryj iframe i pokaż placeholder na początku
+            channelPlayer.src = ""; // Upewnij się, że iframe jest pusty na start
+            playerPlaceholder.classList.remove('hidden');
+
+            // Logika trybu kinowego
+            const cinemaModeToggle = document.getElementById('cinemaModeToggle');
+            cinemaModeToggle.addEventListener('click', () => {
+                mainContentSection.classList.toggle('cinema-mode-active');
+            });
+
+            // Logika przycisku udostępniania
+            const shareButton = document.getElementById('shareButton');
+            shareButton.addEventListener('click', async () => {
+                const shareData = {
+                    title: document.title,
+                    text: 'Oglądaj darmową telewizję online!',
+                    url: window.location.href,
+                };
+
+                try {
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                        console.log('Strona udostępniona pomyślnie.');
+                    } else {
+                        // Fallback dla przeglądarek, które nie obsługują Web Share API
+                        // Skopiuj URL do schowka
+                        const el = document.createElement('textarea');
+                        el.value = window.location.href;
+                        document.body.appendChild(el);
+                        el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                        alert('Link do strony został skopiowany do schowka!');
+                    }
+                } catch (err) {
+                    console.error('Błąd podczas udostępniania:', err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
