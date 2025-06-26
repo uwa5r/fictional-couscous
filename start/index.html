@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open in Browser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2em;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .message {
+      margin-top: 2em;
+      font-size: 1.2em;
+    }
+    .instructions {
+      margin-top: 1em;
+      font-size: 1em;
+      color: #555;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 2em;
+      padding: 0.75em 1.5em;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      const targetUrl = "https://www.profitableratecpm.com/bti4dt8grc?key=b2db1c1bd7472711c25e02835e4c9ee9"; // Change this to your actual URL
+      const ua = navigator.userAgent.toLowerCase();
+      const isAndroid = ua.includes("android");
+      const isTikTok = ua.includes("tiktok");
+
+      if (isTikTok && isAndroid) {
+        // Use intent URL to try to force open in browser
+        const intentUrl = `intent://${targetUrl.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;end`;
+        window.location.href = intentUrl;
+      } else if (!ua.includes("instagram") && !ua.includes("facebook")) {
+        // Regular redirect if not in app browser
+        window.location.href = targetUrl;
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>Open This Site in Your Browser</h1>
+  <div class="message">
+    If you're seeing this page inside TikTok or another app:
+  </div>
+  <div class="instructions">
+    Tap the <strong>three dots</strong> or <strong>share</strong> icon,<br>
+    then choose <strong>"Open in browser"</strong>.
+  </div>
+</body>
+</html>
